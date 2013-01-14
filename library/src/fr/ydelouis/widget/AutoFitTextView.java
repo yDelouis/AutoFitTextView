@@ -1,6 +1,5 @@
 package fr.ydelouis.widget;
 
-import fr.ydelouis.aftv.R;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
