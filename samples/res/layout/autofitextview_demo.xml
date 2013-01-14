@@ -5,14 +5,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <fr.ydelouis.aftv.AutoFitTextView
+    <fr.ydelouis.widget.AutoFitTextView
         android:id="@+id/aftvDemo_aftv1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bkg_aftv"
         android:text="@string/aftvTextDemo" />
 
-    <fr.ydelouis.aftv.AutoFitTextView
+    <fr.ydelouis.widget.AutoFitTextView
         android:id="@+id/aftvDemo_aftv2"
         android:layout_width="200dp"
         android:layout_height="50dp"
@@ -22,14 +22,14 @@
         android:background="@drawable/bkg_aftv"
         android:text="@string/aftvTextDemo" />
 
-    <fr.ydelouis.aftv.AutoFitTextView
+    <fr.ydelouis.widget.AutoFitTextView
         android:id="@+id/aftvDemo_aftv3"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:background="@drawable/bkg_aftv"
         android:text="@string/aftvTextDemo" />
 
-    <fr.ydelouis.aftv.AutoFitTextView
+    <fr.ydelouis.widget.AutoFitTextView
         android:id="@+id/aftvDemo_aftv4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
         android:background="@drawable/bkg_aftv"
         android:text="@string/aftvTextDemo" />
 
-    <fr.ydelouis.aftv.AutoFitTextView
+    <fr.ydelouis.widget.AutoFitTextView
         android:id="@+id/aftvDemo_aftv5"
         android:layout_width="250dp"
         android:layout_height="20dp"
@@ -46,7 +46,7 @@
         android:background="@drawable/bkg_aftv"
         android:text="@string/aftvTextDemo" />
     
-    <fr.ydelouis.aftv.AutoFitTextView
+    <fr.ydelouis.widget.AutoFitTextView
         android:id="@+id/aftvDemo_aftv6"
         android:layout_width="200dp"
         android:layout_height="60dp"
@@ -56,7 +56,7 @@
         android:background="@drawable/bkg_aftv"
         android:text="@string/aftvTextDemo" />
 
-    <fr.ydelouis.aftv.AutoFitTextView
+    <fr.ydelouis.widget.AutoFitTextView
         android:id="@+id/aftvDemo_aftv7"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

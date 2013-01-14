@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.Gravity;
 import android.view.ViewGroup;
-import fr.ydelouis.aftv.AutoFitTextView;
+import fr.ydelouis.widget.AutoFitTextView;
 
 public class AutoFitTextViewDemoActivity extends Activity
 {
