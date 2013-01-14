@@ -1,0 +1,69 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aftv="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/aftvDemo_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <fr.ydelouis.aftv.AutoFitTextView
+        android:id="@+id/aftvDemo_aftv1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bkg_aftv"
+        android:text="@string/aftvTextDemo" />
+
+    <fr.ydelouis.aftv.AutoFitTextView
+        android:id="@+id/aftvDemo_aftv2"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:background="@drawable/bkg_aftv"
+        android:text="@string/aftvTextDemo" />
+
+    <fr.ydelouis.aftv.AutoFitTextView
+        android:id="@+id/aftvDemo_aftv3"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bkg_aftv"
+        android:text="@string/aftvTextDemo" />
+
+    <fr.ydelouis.aftv.AutoFitTextView
+        android:id="@+id/aftvDemo_aftv4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textSize="30sp"
+        android:background="@drawable/bkg_aftv"
+        android:text="@string/aftvTextDemo" />
+
+    <fr.ydelouis.aftv.AutoFitTextView
+        android:id="@+id/aftvDemo_aftv5"
+        android:layout_width="250dp"
+        android:layout_height="20dp"
+        android:gravity="right"
+        android:background="@drawable/bkg_aftv"
+        android:text="@string/aftvTextDemo" />
+    
+    <fr.ydelouis.aftv.AutoFitTextView
+        android:id="@+id/aftvDemo_aftv6"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        aftv:minTextSize="35sp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:background="@drawable/bkg_aftv"
+        android:text="@string/aftvTextDemo" />
+
+    <fr.ydelouis.aftv.AutoFitTextView
+        android:id="@+id/aftvDemo_aftv7"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="10dp"
+        android:paddingTop="30dp"
+        aftv:maxTextSize="10sp"
+        android:background="@drawable/bkg_aftv"
+        android:text="@string/aftvTextDemo" />
+
+</LinearLayout>
