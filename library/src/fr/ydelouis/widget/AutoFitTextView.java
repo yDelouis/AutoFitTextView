@@ -97,7 +97,26 @@ public class AutoFitTextView extends TextView
 			resizeText();
 		}
 	}
+	
+	@Override
+	protected int getSuggestedMinimumWidth() {
+		Drawable background = getBackground();
+		setBackgroundDrawable(null);
+		int minWidth = super.getSuggestedMinimumWidth();
+		setBackgroundDrawable(background);
+		return minWidth;
+	}
+	
+	@Override
+	protected int getSuggestedMinimumHeight() {
+		Drawable background = getBackground();
+		setBackgroundDrawable(null);
+		int minHeight = super.getSuggestedMinimumHeight();
+		setBackgroundDrawable(background);
+		return minHeight;
+	}
 
+	@Override
 	protected void onTextChanged(final CharSequence text, final int start, final int before, final int after) {
 		resizeText();
 	}
