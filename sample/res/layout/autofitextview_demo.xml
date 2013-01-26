@@ -1,0 +1,87 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<LinearLayout
+		xmlns:aftv="http://schemas.android.com/apk/res-auto"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:gravity="center_horizontal"
+		android:orientation="vertical">
+
+		<fr.ydelouis.widget.AutoFitTextView
+			android:id="@+id/aftvDemo_aftv1"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			style="@style/aftvDemo"
+			android:text="@string/widthMatchParent" />
+
+		<fr.ydelouis.widget.AutoFitTextView
+			android:id="@+id/aftvDemo_aftv2"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="20sp"
+			style="@style/aftvDemo"
+			android:text="@string/sizeWrapContent" />
+
+		<fr.ydelouis.widget.AutoFitTextView
+			android:id="@+id/aftvDemo_aftv3"
+			android:layout_width="100dp"
+			android:layout_height="wrap_content"
+			style="@style/aftvDemo"
+			android:text="@string/widthFixed" />
+
+		<fr.ydelouis.widget.AutoFitTextView
+			android:id="@+id/aftvDemo_aftv4"
+			android:layout_width="match_parent"
+			android:layout_height="20dp"
+			android:textSize="20sp"
+			style="@style/aftvDemo"
+			android:text="@string/heightFixed" />
+
+		<fr.ydelouis.widget.AutoFitTextView
+			android:id="@+id/aftvDemo_aftv5"
+			android:layout_width="200dp"
+			android:layout_height="30dp"
+			android:gravity="right"
+			style="@style/aftvDemo"
+			android:text="@string/sizeFixedGravityRight" />
+
+		<fr.ydelouis.widget.AutoFitTextView
+			android:id="@+id/aftvDemo_aftv6"
+			android:layout_width="200dp"
+			android:layout_height="30dp"
+			aftv:minTextSize="25sp"
+			android:ellipsize="end"
+			android:singleLine="true"
+			style="@style/aftvDemo"
+			android:text="@string/minTextSizeFixed" />
+
+		<fr.ydelouis.widget.AutoFitTextView
+			android:id="@+id/aftvDemo_aftv7"
+			android:layout_width="200dp"
+			android:layout_height="30dp"
+			android:paddingLeft="30dp"
+			android:paddingTop="10dp"
+			style="@style/aftvDemo"
+			android:text="@string/withPaddings" />
+
+		<fr.ydelouis.widget.AutoFitTextView
+			android:id="@+id/aftvDemo_aftv8"
+			android:layout_width="200dp"
+			android:layout_height="30dp"
+			aftv:maxTextSize="12sp"
+			style="@style/aftvDemo"
+			android:text="@string/maxTextSize" />
+
+		<fr.ydelouis.widget.AutoFitTextView
+			android:id="@+id/aftvDemo_aftv9"
+			android:layout_width="200dp"
+			android:layout_height="30dp"
+			android:paddingLeft="30dp"
+			android:drawableLeft="@android:drawable/ic_menu_edit"
+			style="@style/aftvDemo"
+			android:text="@string/withDrawable" />
+
+	</LinearLayout>
+</ScrollView>

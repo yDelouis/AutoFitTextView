@@ -1,0 +1,10 @@
+<resources>
+
+    <style name="AppTheme" parent="android:Theme.Light" />
+
+	<style name="aftvDemo">
+		<item name="android:background">@drawable/bkg_aftv</item>
+		<item name="android:layout_margin">4dp</item>
+	</style>
+
+</resources>

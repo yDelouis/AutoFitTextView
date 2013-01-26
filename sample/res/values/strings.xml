@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="autoFitTextView">AutoFitTextView</string>
+	<string name="autoFitTextViewDemo">AutoFitTextView demo</string>
+	<string name="aftvTextDemo">Hello world !</string>
+	<string name="aftvTextDemo2">Amazing</string>
+	<string name="widthMatchParent">Width: match_parent</string>
+	<string name="sizeWrapContent">Size: wrap_content</string>
+	<string name="widthFixed">Width: fixed</string>
+	<string name="heightFixed">Height: fixed</string>
+	<string name="sizeFixedGravityRight">Size: Fixed, Gravity: right</string>
+	<string name="minTextSizeFixed">MinTextSize: fixed</string>
+	<string name="withPaddings">With paddings</string>
+	<string name="withDrawable">With drawable</string>
+	<string name="maxTextSize">MaxTextSize: fixed</string>
+	<string name="changingText">Changing text</string>
+
+</resources>

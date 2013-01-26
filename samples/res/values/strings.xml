@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <string name="autoFitTextView">AutoFitTextView</string>
-	<string name="autoFitTextViewDemo">AutoFitTextView demo</string>
-	<string name="aftvTextDemo">Hello world !</string>
-	<string name="aftvTextDemo2">Amazing</string>
-
-</resources>

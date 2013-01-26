@@ -2,6 +2,8 @@ package fr.ydelouis.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.widget.TextView;
@@ -30,13 +32,13 @@ public class AutoFitTextView extends TextView
 	
 	public AutoFitTextView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		
+
 		TypedArray tAttrs = context.obtainStyledAttributes(attrs, R.styleable.AutoFitTextView, defStyle, 0);
 		maxTextSize = tAttrs.getDimensionPixelSize(R.styleable.AutoFitTextView_maxTextSize, maxTextSize);
 		minTextSize = tAttrs.getDimensionPixelSize(R.styleable.AutoFitTextView_minTextSize, minTextSize);
 		tAttrs.recycle();
 	}
-	
+
 	private void resizeText() {
 		if (getWidth() <= 0 || getHeight() <= 0)
 			return;
@@ -101,19 +103,28 @@ public class AutoFitTextView extends TextView
 	@Override
 	protected int getSuggestedMinimumWidth() {
 		Drawable background = getBackground();
-		setBackgroundDrawable(null);
+		setBackground(null);
 		int minWidth = super.getSuggestedMinimumWidth();
-		setBackgroundDrawable(background);
+		setBackground(background);
 		return minWidth;
 	}
 	
 	@Override
 	protected int getSuggestedMinimumHeight() {
 		Drawable background = getBackground();
-		setBackgroundDrawable(null);
+		setBackground(null);
 		int minHeight = super.getSuggestedMinimumHeight();
-		setBackgroundDrawable(background);
+		setBackground(background);
 		return minHeight;
+	}
+
+	@SuppressWarnings("deprecation")
+	@Override
+	public void setBackground(Drawable background) {
+		if(Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN)
+			super.setBackground(background);
+		else
+			setBackgroundDrawable(background);
 	}
 
 	@Override
