@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.text.method.ScrollingMovementMethod;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.widget.TextView;
@@ -37,6 +38,9 @@ public class AutoFitTextView extends TextView
 		maxTextSize = tAttrs.getDimensionPixelSize(R.styleable.AutoFitTextView_maxTextSize, maxTextSize);
 		minTextSize = tAttrs.getDimensionPixelSize(R.styleable.AutoFitTextView_minTextSize, minTextSize);
 		tAttrs.recycle();
+
+        // enable scrolling
+        setMovementMethod(new ScrollingMovementMethod());
 	}
 
 	private void resizeText() {
