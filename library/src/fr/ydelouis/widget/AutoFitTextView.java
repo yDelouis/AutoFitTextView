@@ -18,11 +18,8 @@ public class AutoFitTextView extends TextView
 	
 	private int minTextSize = 1;
 	private int maxTextSize = 1000;
-	
 	private Mode mode = Mode.None;
 	private boolean inComputation;
-	private int widthMeasureSpec;
-	private int heightMeasureSpec;
 
 	public AutoFitTextView(Context context) {
 		super(context);
@@ -47,7 +44,7 @@ public class AutoFitTextView extends TextView
         setHorizontallyScrolling(true);
 	}
 
-	private void resizeText() {
+	private void resizeText(int widthMeasureSpec, int heightMeasureSpec) {
 		if (getWidth() <= 0 || getHeight() <= 0)
 			return;
 		
@@ -85,7 +82,7 @@ public class AutoFitTextView extends TextView
 			return getMeasuredHeight() >= targetHeight;
 	}
 	
-	private Mode getMode(int widthMeasureSpec, int heightMeasureSpec) {
+	private Mode getMode() {
         // MeasureSpec.getMode doesn't work as expected.
         // I thought the mode is MeasureSpec.EXACTLY when the layout
         // is MATCH_PARENT/FILL_PARENT,but actually it's this:
@@ -125,10 +122,8 @@ public class AutoFitTextView extends TextView
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 		if(!inComputation) {
-			this.widthMeasureSpec = widthMeasureSpec;
-			this.heightMeasureSpec = heightMeasureSpec;
-			mode = getMode(widthMeasureSpec, heightMeasureSpec);
-			resizeText();
+			mode = getMode();
+			resizeText(widthMeasureSpec, heightMeasureSpec);
 		}
 	}
 	
@@ -161,13 +156,16 @@ public class AutoFitTextView extends TextView
 
 	@Override
 	protected void onTextChanged(final CharSequence text, final int start, final int before, final int after) {
-		resizeText();
+        // ensure that resizeText is called
+        requestLayout();
 	}
 
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-		if (w != oldw || h != oldh)
-			resizeText();
+		if (w != oldw || h != oldh) {
+            // ensure that resizeText is called
+            requestLayout();
+        }
 	}
 
 	public int getMinTextSize() {
@@ -176,7 +174,8 @@ public class AutoFitTextView extends TextView
 
 	public void setMinTextSize(int minTextSize) {
 		this.minTextSize = minTextSize;
-		resizeText();
+        // ensure that resizeText is called
+        requestLayout();
 	}
 
 	public int getMaxTextSize() {
@@ -185,6 +184,7 @@ public class AutoFitTextView extends TextView
 
 	public void setMaxTextSize(int maxTextSize) {
 		this.maxTextSize = maxTextSize;
-		resizeText();
+        // ensure that resizeText is called
+        requestLayout();
 	}
 }
