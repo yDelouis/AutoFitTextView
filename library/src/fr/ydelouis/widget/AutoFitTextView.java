@@ -7,6 +7,7 @@ import android.os.Build;
 import android.text.method.ScrollingMovementMethod;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class AutoFitTextView extends TextView
@@ -41,6 +42,9 @@ public class AutoFitTextView extends TextView
 
         // enable scrolling
         setMovementMethod(new ScrollingMovementMethod());
+
+        // disables the text wrap
+        setHorizontallyScrolling(true);
 	}
 
 	private void resizeText() {
@@ -82,15 +86,39 @@ public class AutoFitTextView extends TextView
 	}
 	
 	private Mode getMode(int widthMeasureSpec, int heightMeasureSpec) {
-		int widthMode = MeasureSpec.getMode(widthMeasureSpec);
-		int heightMode = MeasureSpec.getMode(heightMeasureSpec);
-		if(widthMode == MeasureSpec.EXACTLY && heightMode == MeasureSpec.EXACTLY)
-			return Mode.Both;
-		if(widthMode == MeasureSpec.EXACTLY)
-			return Mode.Width;
-		if(heightMode == MeasureSpec.EXACTLY)
-			return Mode.Height;
-		return Mode.None;
+        // MeasureSpec.getMode doesn't work as expected.
+        // I thought the mode is MeasureSpec.EXACTLY when the layout
+        // is MATCH_PARENT/FILL_PARENT,but actually it's this:
+        // +---------------------------------------------------------+
+        // |         LayoutParams          |    MeasureSpec Mode     |
+        // | layout_width  | layout_height | horizontal | vertical   |
+        // +---------------+---------------+------------+------------+
+        // |  wrap_content |  wrap_content |      both* |    AT_MOST |
+        // |  wrap_content |  match_parent |      both* |      both* |
+        // |  match_parent |  wrap_content |    EXACTLY |      both* |
+        // |  match_parent |  match_parent |    EXACTLY |    EXACTLY |
+        // +---------------+---------------+------------+------------+
+        // *) onMeasure gets called multiple times and when "both" is
+        //    specified in the table above, the MeasureSpec Mode is
+        //    on one call MeasureSpec.AT_MOST and in the other call
+        //    it's MeasureSpec.EXACTLY.
+
+        int widthParams = getLayoutParams().width;
+        int heightParams = getLayoutParams().height;
+
+        if (widthParams == ViewGroup.LayoutParams.WRAP_CONTENT) {
+            if (heightParams == ViewGroup.LayoutParams.WRAP_CONTENT) {
+                return Mode.None;
+            } else { // heightParams == MATCH_PARENT (or FILL_PARENT)
+                return Mode.Height;
+            }
+        } else {     // widthParams  == MATCH_PARENT (or FILL_PARENT)
+            if (heightParams == ViewGroup.LayoutParams.WRAP_CONTENT) {
+                return Mode.Width;
+            } else { // heightParams == MATCH_PARENT (or FILL_PARENT)
+                return Mode.Both;
+            }
+        }
 	}
 	
 	@Override
