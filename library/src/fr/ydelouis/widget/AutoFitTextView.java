@@ -57,7 +57,7 @@ public class AutoFitTextView extends TextView
 		inComputation = true;
 		float higherSize = maxTextSize;
 		float lowerSize = minTextSize;
-		float textSize = getTextSize();
+		float textSize;
 		while(higherSize - lowerSize > THRESHOLD) {
 			textSize = (higherSize + lowerSize) / 2;
 			if (isTooBig(textSize, targetWidth, targetHeight)) {
