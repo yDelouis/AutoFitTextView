@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.text.method.ScrollingMovementMethod;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class AutoFitTextView extends TextView
@@ -16,11 +18,8 @@ public class AutoFitTextView extends TextView
 	
 	private int minTextSize = 1;
 	private int maxTextSize = 1000;
-	
 	private Mode mode = Mode.None;
 	private boolean inComputation;
-	private int widthMeasureSpec;
-	private int heightMeasureSpec;
 
 	public AutoFitTextView(Context context) {
 		super(context);
@@ -37,9 +36,15 @@ public class AutoFitTextView extends TextView
 		maxTextSize = tAttrs.getDimensionPixelSize(R.styleable.AutoFitTextView_maxTextSize, maxTextSize);
 		minTextSize = tAttrs.getDimensionPixelSize(R.styleable.AutoFitTextView_minTextSize, minTextSize);
 		tAttrs.recycle();
+
+        // enable scrolling
+        setMovementMethod(new ScrollingMovementMethod());
+
+        // disables the text wrap
+        setHorizontallyScrolling(true);
 	}
 
-	private void resizeText() {
+	private void resizeText(int widthMeasureSpec, int heightMeasureSpec) {
 		if (getWidth() <= 0 || getHeight() <= 0)
 			return;
 		
@@ -52,7 +57,7 @@ public class AutoFitTextView extends TextView
 		inComputation = true;
 		float higherSize = maxTextSize;
 		float lowerSize = minTextSize;
-		float textSize = getTextSize();
+		float textSize;
 		while(higherSize - lowerSize > THRESHOLD) {
 			textSize = (higherSize + lowerSize) / 2;
 			if (isTooBig(textSize, targetWidth, targetHeight)) {
@@ -77,26 +82,48 @@ public class AutoFitTextView extends TextView
 			return getMeasuredHeight() >= targetHeight;
 	}
 	
-	private Mode getMode(int widthMeasureSpec, int heightMeasureSpec) {
-		int widthMode = MeasureSpec.getMode(widthMeasureSpec);
-		int heightMode = MeasureSpec.getMode(heightMeasureSpec);
-		if(widthMode == MeasureSpec.EXACTLY && heightMode == MeasureSpec.EXACTLY)
-			return Mode.Both;
-		if(widthMode == MeasureSpec.EXACTLY)
-			return Mode.Width;
-		if(heightMode == MeasureSpec.EXACTLY)
-			return Mode.Height;
-		return Mode.None;
+	private Mode getMode() {
+        // MeasureSpec.getMode doesn't work as expected.
+        // I thought the mode is MeasureSpec.EXACTLY when the layout
+        // is MATCH_PARENT/FILL_PARENT,but actually it's this:
+        // +---------------------------------------------------------+
+        // |         LayoutParams          |    MeasureSpec Mode     |
+        // | layout_width  | layout_height | horizontal | vertical   |
+        // +---------------+---------------+------------+------------+
+        // |  wrap_content |  wrap_content |      both* |    AT_MOST |
+        // |  wrap_content |  match_parent |      both* |      both* |
+        // |  match_parent |  wrap_content |    EXACTLY |      both* |
+        // |  match_parent |  match_parent |    EXACTLY |    EXACTLY |
+        // +---------------+---------------+------------+------------+
+        // *) onMeasure gets called multiple times and when "both" is
+        //    specified in the table above, the MeasureSpec Mode is
+        //    on one call MeasureSpec.AT_MOST and in the other call
+        //    it's MeasureSpec.EXACTLY.
+
+        int widthParams = getLayoutParams().width;
+        int heightParams = getLayoutParams().height;
+
+        if (widthParams == ViewGroup.LayoutParams.WRAP_CONTENT) {
+            if (heightParams == ViewGroup.LayoutParams.WRAP_CONTENT) {
+                return Mode.None;
+            } else { // heightParams == MATCH_PARENT (or FILL_PARENT)
+                return Mode.Height;
+            }
+        } else {     // widthParams  == MATCH_PARENT (or FILL_PARENT)
+            if (heightParams == ViewGroup.LayoutParams.WRAP_CONTENT) {
+                return Mode.Width;
+            } else { // heightParams == MATCH_PARENT (or FILL_PARENT)
+                return Mode.Both;
+            }
+        }
 	}
 	
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 		if(!inComputation) {
-			this.widthMeasureSpec = widthMeasureSpec;
-			this.heightMeasureSpec = heightMeasureSpec;
-			mode = getMode(widthMeasureSpec, heightMeasureSpec);
-			resizeText();
+			mode = getMode();
+			resizeText(widthMeasureSpec, heightMeasureSpec);
 		}
 	}
 	
@@ -129,13 +156,16 @@ public class AutoFitTextView extends TextView
 
 	@Override
 	protected void onTextChanged(final CharSequence text, final int start, final int before, final int after) {
-		resizeText();
+        // ensure that resizeText is called
+        requestLayout();
 	}
 
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-		if (w != oldw || h != oldh)
-			resizeText();
+		if (w != oldw || h != oldh) {
+            // ensure that resizeText is called
+            requestLayout();
+        }
 	}
 
 	public int getMinTextSize() {
@@ -144,7 +174,8 @@ public class AutoFitTextView extends TextView
 
 	public void setMinTextSize(int minTextSize) {
 		this.minTextSize = minTextSize;
-		resizeText();
+        // ensure that resizeText is called
+        requestLayout();
 	}
 
 	public int getMaxTextSize() {
@@ -153,6 +184,7 @@ public class AutoFitTextView extends TextView
 
 	public void setMaxTextSize(int maxTextSize) {
 		this.maxTextSize = maxTextSize;
-		resizeText();
+        // ensure that resizeText is called
+        requestLayout();
 	}
 }
